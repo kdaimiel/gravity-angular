@@ -1,0 +1,20 @@
+{
+  "name": "gravity",
+  "version": "1.0.0",
+  "description": "Gravity 2D model with Velocity & Angular",
+  "keywords": [
+    "velocity",
+    "angular"
+  ],
+  "authors": [
+    "Enrique Daimiel Ruiz <k.daimiel@gmail.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
