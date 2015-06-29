@@ -1,6 +1,18 @@
 module.exports = function(grunt) {
   'use strict';
 
+  var myConfig = {
+    src: [
+      'src/gravity.js',
+      'src/gravity.controller.js',
+      'src/gravity.directive.js',
+      'src/gravity.service.js',
+      'src/gravity.constants.js',
+      'src/particles/particle.factory.js',
+      'src/magnets/magnet.factory.js'
+    ],
+  };
+
   // Project configuration.
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
@@ -19,15 +31,7 @@ module.exports = function(grunt) {
         banner: '<%= meta.banner %>\n'
       },
       build: {
-        src: [
-          'src/gravity.js',
-          'src/gravity.controller.js',
-          'src/gravity.directive.js',
-          'src/gravity.service.js',
-          'src/gravity.constants.js',
-          'src/particles/particle.factory.js',
-          'src/magnets/magnet.factory.js'
-        ],
+        src: myConfig.src,
         dest: 'dist/<%= pkg.name %>.min.js'
       }
     },
@@ -40,15 +44,7 @@ module.exports = function(grunt) {
         stripBanners: true
       },
       dist: {
-        src: [
-          'src/gravity.js',
-          'src/gravity.controller.js',
-          'src/gravity.directive.js',
-          'src/gravity.service.js',
-          'src/gravity.constants.js',
-          'src/particles/particle.factory.js',
-          'src/magnets/magnet.factory.js'
-        ],
+        src: myConfig.src,
         dest: 'dist/<%= pkg.name %>.js'
       }
     },
@@ -83,15 +79,7 @@ module.exports = function(grunt) {
         options: {
           jshintrc: '.jshintrc'
         },
-        src: [
-          'src/gravity.js',
-          'src/gravity.controller.js',
-          'src/gravity.directive.js',
-          'src/gravity.service.js',
-          'src/gravity.constants.js',
-          'src/particles/particle.factory.js',
-          'src/magnets/magnet.factory.js'
-        ],
+        src: myConfig.src
       },
       test: {
         options: {
@@ -106,15 +94,7 @@ module.exports = function(grunt) {
         tasks: ['jshint:gruntfile'],
       },
       src: {
-        files: [
-          'src/gravity.js',
-          'src/gravity.controller.js',
-          'src/gravity.directive.js',
-          'src/gravity.service.js',
-          'src/gravity.constants.js',
-          'src/particles/particle.factory.js',
-          'src/magnets/magnet.factory.js'
-        ],
+        files: myConfig.src,
         tasks: ['default', 'test'],
       },
       test: {
