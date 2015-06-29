@@ -129,9 +129,9 @@ module.exports = function(grunt) {
     bump: {
       options: {
         files: ['package.json', 'bower.json'],
-        commitMessage: 'gravity release: bump v<%= pkg.version %>',
+        commitMessage: 'Gravity 2D Model release: bump v<%= pkg.version %>',
         tagName: 'v<%= pkg.version %>',
-        tagMessage: 'gravity release: bump v<%= pkg.version %>',
+        tagMessage: 'Gravity 2D Model release: bump v<%= pkg.version %>',
         commitFiles: ['-a'],
         pushTo: '<%= pkg.repository %>'
       }
@@ -148,7 +148,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-karma');
   grunt.loadNpmTasks('grunt-bump');
 
-  // Register custom task
+  // Register custom tasks
   grunt.registerTask('build', [
     'clean',
     'concat',

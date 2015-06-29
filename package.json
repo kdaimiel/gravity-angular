@@ -1,6 +1,6 @@
 {
   "name": "gravity",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Gravity 2D model with Velocity & Angular",
   "repository": "https://github.com/KenEDR/gravity-angular-velocity",
   "main": "src/index.html",
