@@ -2,7 +2,7 @@
 (function () {
   angular.module('Gravity.Controllers')
     .controller('GravityController', GravityController);
-    
+
   GravityController.$inject = ['gravityService', '$log'];
 
   function GravityController(gravityService, $log){

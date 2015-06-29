@@ -1,6 +1,6 @@
 {
   "name": "gravity",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Gravity 2D model with Velocity & Angular",
   "repository": "https://github.com/KenEDR/gravity-angular-velocity",
   "main": "src/index.html",
@@ -18,7 +18,9 @@
   "license": "MIT",
   "devDependencies": {
     "grunt": "^0.4.5",
+    "grunt-bump": "^0.3.1",
     "grunt-contrib-clean": "^0.6.0",
+    "grunt-contrib-concat": "^0.5.1",
     "grunt-contrib-connect": "^0.10.1",
     "grunt-contrib-jshint": "^0.11.2",
     "grunt-contrib-uglify": "^0.9.1",

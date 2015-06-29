@@ -5,18 +5,18 @@ module.exports = function(grunt) {
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
     meta: {
-      banner: '\n' +
+      banner: '/*\n' +
         ' * <%= pkg.name %>\n' +
-        ' * @Description <%= pkg.description %>\n ' +
+        ' * @Description <%= pkg.description %>\n' +
         ' * @version v<%= pkg.version %> - <%= grunt.template.today("yyyy-mm-dd") %>\n' +
         ' * @link <%= pkg.homepage %>\n' +
         ' * @author <%= pkg.author %>\n' +
         ' * @license MIT License, http://www.opensource.org/licenses/MIT\n' +
-        ' * \n',
+        ' */',
     },
     uglify: {
       options: {
-        banner: '/*! <%= meta.banner %> */\n'
+        banner: '<%= meta.banner %>\n'
       },
       build: {
         src: [
@@ -33,6 +33,24 @@ module.exports = function(grunt) {
     },
     clean: {
       dist: ['dist/*js']
+    },
+    concat: {
+      options: {
+        banner: '<%= meta.banner %>\n',
+        stripBanners: true
+      },
+      dist: {
+        src: [
+          'src/gravity.js',
+          'src/gravity.controller.js',
+          'src/gravity.directive.js',
+          'src/gravity.service.js',
+          'src/gravity.constants.js',
+          'src/particles/particle.factory.js',
+          'src/magnets/magnet.factory.js'
+        ],
+        dest: 'dist/<%= pkg.name %>.js'
+      }
     },
     connect: {
       server: {
@@ -107,47 +125,45 @@ module.exports = function(grunt) {
         tasks: ['jshint'],
       }
     },
-    ngAnnotate: {
+    bump: {
       options: {
-        singleQuotes: true,
-      },
-      gravity: {
-        files: {
-          expand: true,
-          src:[
-            'src/gravity.js',
-            'src/gravity.controller.js',
-            'src/gravity.directive.js',
-            'src/gravity.service.js',
-            'src/gravity.constants.js',
-            'src/particles/particle.factory.js',
-            'src/magnets/magnet.factory.js'
-          ],
-          rename: function (dest, src) { return src + '-annotated'; },
-        }
+        files: ['package.json', 'bower.json'],
+        commitMessage: 'gravity release: bump v<%= pkg.version %>',
+        tagName: 'v<%= pkg.version %>',
+        tagMessage: 'gravity release: bump v<%= pkg.version %>',
+        commitFiles: ['-a'],
+        pushTo: 'github'
       }
-    },
-
+    }
   });
 
   // Load grunt plugings
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-connect');
   grunt.loadNpmTasks('grunt-contrib-clean');
+  grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-karma');
-  grunt.loadNpmTasks('grunt-ng-annotate');
+  grunt.loadNpmTasks('grunt-bump');
 
   // Register custom task
   grunt.registerTask('build', [
     'clean',
+    'concat',
     'uglify'
   ]);
 
   grunt.registerTask('test', [
     'jshint',
     'karma:unit'
+  ]);
+
+  grunt.registerTask('release', [
+    'test',
+    'bump-only',
+    'build',
+    'bump-commit'
   ]);
 
   // Default task(s).
