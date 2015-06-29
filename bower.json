@@ -1,6 +1,6 @@
 {
   "name": "gravity",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Gravity 2D model with Velocity & Angular",
   "keywords": [
     "velocity",

@@ -68,7 +68,8 @@ module.exports = function(grunt) {
     },
     karma: {
       unit: {
-        configFile: 'karma.conf.js'
+        configFile: 'karma.conf.js',
+        singleRun: true
       }
     },
     jshint: {
@@ -132,7 +133,7 @@ module.exports = function(grunt) {
         tagName: 'v<%= pkg.version %>',
         tagMessage: 'gravity release: bump v<%= pkg.version %>',
         commitFiles: ['-a'],
-        pushTo: 'github'
+        pushTo: '<%= pkg.repository %>'
       }
     }
   });
