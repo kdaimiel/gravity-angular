@@ -10,7 +10,7 @@ Gravity 2D model with Velocity &amp; Angular
 ## Example
 
 ```html
-  <div id="gravity" data-ng-controller="GravityController as gc">
+  <div ng-app="gravity" id="gravity" data-ng-controller="GravityController as gc">
       <p>Double-click to add new nodes. Drag to move them. <br>Change skin: <a data-ng-click="gc.previousSkin()" href="">Previous</a> / <a data-ng-click="gc.nextSkin()" href="">Next</a>.</p>
       <gravity></gravity>
   </div>
