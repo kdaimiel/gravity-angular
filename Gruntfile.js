@@ -131,6 +131,7 @@ module.exports = function(grunt) {
   // Register custom tasks
   grunt.registerTask('build', [
     'clean',
+    'test',
     'concat',
     'uglify'
   ]);
