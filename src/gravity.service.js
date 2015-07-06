@@ -32,6 +32,10 @@
     var service = {
       init : init,
       nextSkin: nextSkin,
+      onMouseDown: mouseDownHandler,
+      onMouseMove: mouseMoveHandler,
+      onMouseUp: mouseUpHandler,
+      onWindowResize : windowResizeHandler,
       previousSkin: previousSkin,
       log: $log.log
     };
@@ -79,44 +83,6 @@
       return Math.sqrt(dx*dx + dy*dy);
     }
 
-    function documentMouseDownHandler(event) {
-      event.preventDefault();
-
-      mouseIsDown = true;
-
-      if( new Date().getTime() - mouseDownTime < 300 ) {
-        // The mouse was pressed down twice with a < 300 ms interval: add a magnet
-        createMagnet( { x: mouseX, y: mouseY } );
-
-        mouseDownTime = 0;
-      }
-
-      mouseDownTime = new Date().getTime();
-
-      for( var i = 0, len = magnets.length; i < len; i++ ) {
-        var magnet = magnets[i];
-
-        if( distanceBetween( magnet.position, { x: mouseX, y: mouseY } ) < magnet.orbit * 0.5) {
-          magnet.dragging = true;
-          break;
-        }
-      }
-    }
-
-    function documentMouseMoveHandler(event) {
-      mouseX = event.clientX - canvas.offsetLeft + window.pageXOffset;
-      mouseY = event.clientY - canvas.offsetTop + window.pageYOffset ;
-    }
-
-    function documentMouseUpHandler(event) {
-      mouseIsDown = false;
-
-      for( var i = 0, len = magnets.length; i < len; i++ ) {
-        var magnet = magnets[i];
-        magnet.dragging = false;
-      }
-    }
-
     function init(element) {
 
       particles = [];
@@ -127,12 +93,6 @@
 
       if (canvas && canvas.getContext) {
         context = canvas.getContext('2d');
-
-        // Register event listeners
-        canvas.addEventListener('mousemove', documentMouseMoveHandler, false);
-        canvas.addEventListener('mousedown', documentMouseDownHandler, false);
-        canvas.addEventListener('mouseup', documentMouseUpHandler, false);
-        canvas.addEventListener('resize', windowResizeHandler, false);
 
         windowResizeHandler();
 
@@ -253,6 +213,44 @@
       }
     }
 
+    function mouseDownHandler(event) {
+      event.preventDefault();
+
+      mouseIsDown = true;
+
+      if( new Date().getTime() - mouseDownTime < 300 ) {
+        // The mouse was pressed down twice with a < 300 ms interval: add a magnet
+        createMagnet( { x: mouseX, y: mouseY } );
+
+        mouseDownTime = 0;
+      }
+
+      mouseDownTime = new Date().getTime();
+
+      for( var i = 0, len = magnets.length; i < len; i++ ) {
+        var magnet = magnets[i];
+
+        if( distanceBetween( magnet.position, { x: mouseX, y: mouseY } ) < magnet.orbit * 0.5) {
+          magnet.dragging = true;
+          break;
+        }
+      }
+    }
+
+    function mouseMoveHandler(event) {
+      mouseX = event.clientX - canvas.offsetLeft + window.pageXOffset;
+      mouseY = event.clientY - canvas.offsetTop + window.pageYOffset ;
+    }
+
+    function mouseUpHandler(event) {
+      mouseIsDown = false;
+
+      for( var i = 0, len = magnets.length; i < len; i++ ) {
+        var magnet = magnets[i];
+        magnet.dragging = false;
+      }
+    }
+
     function nextSkin() {
       event.preventDefault();
       ++skinIndex;
@@ -277,7 +275,6 @@
     }
 
     function windowResizeHandler() {
-
       canvas.width = document.getElementById('gravity') ? document.getElementById('gravity').clientWidth : SCREEN.WIDTH;
       canvas.height = document.getElementById('gravity') ? document.getElementById('gravity').clientHeight : SCREEN.HEIGHT;
 
