@@ -14,4 +14,10 @@ Gravity 2D model with Velocity &amp; Angular
       <p>Double-click to add new nodes. Drag to move them. <br>Change skin: <a data-ng-click="gc.previousSkin()" href="">Previous</a> / <a data-ng-click="gc.nextSkin()" href="">Next</a>.</p>
       <gravity></gravity>
   </div>
+
+  <script type="text/javascript" src="../bower_components/angular/angular.min.js"></script>
+  <script type="text/javascript" src="../bower_components/velocity/velocity.min.js"></script>
+
+  <!-- Gravity dependencies -->
+  <script type="text/javascript" src="../dist/gravity.min.js"></script>
 ```
