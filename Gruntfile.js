@@ -56,7 +56,6 @@ module.exports = function(grunt) {
           hostname: 'localhost',
           open : {
             target: 'http://localhost:8000/demo/', // target url to open
-            //appName: '<%= pkg.name %>', // name of the app that opens, ie: open, start, xdg-open
             callback: function() {} // called when the app has opened
           }
         }
