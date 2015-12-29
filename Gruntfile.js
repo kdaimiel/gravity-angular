@@ -114,10 +114,33 @@ module.exports = function(grunt) {
         commitFiles: ['-a'],
         pushTo: '<%= pkg.repository %>'
       }
+    },
+    gitadd: {
+      task: {
+        options: {
+          exclude: true,
+          force: false
+        },
+        files: {
+          src: [
+            '.'
+          ]
+        }
+      }
+    },
+    'npm-publish': {
+      options: {
+        // list of tasks that are required before publishing
+        requires: ['build'],
+        // if the workspace is dirty, abort publishing (to avoid publishing local changes)
+        abortIfDirty: false
+      }
     }
   });
 
   // Load grunt plugings
+  grunt.loadNpmTasks('grunt-npm');
+  grunt.loadNpmTasks('grunt-git');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-connect');
   grunt.loadNpmTasks('grunt-contrib-clean');
@@ -141,10 +164,11 @@ module.exports = function(grunt) {
   ]);
 
   grunt.registerTask('release', [
-    'test',
-    'bump-only',
     'build',
-    'bump-commit'
+    'gitadd',
+    'bump-commit',
+    'npm-publish',
+    'bump-only'
   ]);
 
   // Default task(s).
