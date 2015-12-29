@@ -1,7 +1,7 @@
 /*
  * gravity-angular
  * @Description Gravity 2D model with Velocity & Angular
- * @version v1.1.2 - 2015-12-29
+ * @version v1.1.3 - 2015-12-29
  * @link 
  * @author Enrique Daimiel Ruiz <k.daimiel@gmail.com>
  * @license MIT License, http://www.opensource.org/licenses/MIT
