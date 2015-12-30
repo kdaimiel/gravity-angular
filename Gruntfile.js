@@ -3,13 +3,8 @@ module.exports = function(grunt) {
 
   var myConfig = {
     src: [
-      'src/gravity.js',
-      'src/gravity.controller.js',
-      'src/gravity.directive.js',
-      'src/gravity.service.js',
-      'src/gravity.constants.js',
-      'src/particles/particle.factory.js',
-      'src/magnets/magnet.factory.js'
+      'src/*.js',
+      'src/**/*.js',
     ],
   };
 
@@ -49,14 +44,16 @@ module.exports = function(grunt) {
       }
     },
     connect: {
-      server: {
+      options: {
+        port: 8000,
+        livereload: 35729,
+        hostname: 'localhost'
+      },
+      livereload: {
         options: {
-          keepalive: true,
-          port: 8000,
-          hostname: 'localhost',
           open : {
-            target: 'http://localhost:8000/demo/', // target url to open
-            callback: function() {} // called when the app has opened
+            target: 'http://localhost:8000/',
+            callback: function() {}
           }
         }
       }
@@ -103,6 +100,20 @@ module.exports = function(grunt) {
       jshint: {
         files: ['.jshintrc'],
         tasks: ['jshint'],
+      },
+      reload: {
+        options: {
+          livereload: '<%= connect.options.livereload %>'
+        },
+        files: [
+          '<%= watch.gruntfile.files %>',
+          '<%= watch.src.files %>',
+          '<%= watch.test.files %>',
+          '<%= watch.jshint.files %>',
+          '**/*.css',
+          '**/*.html'
+        ],
+        tasks: ['build']
       }
     },
     bump: {
@@ -120,6 +131,33 @@ module.exports = function(grunt) {
         options: {
           exclude: true,
           force: false
+        },
+        files: {
+          src: [
+            '.'
+          ]
+        }
+      }
+    },
+    gitcommit: {
+      task: {
+        options: {
+          message: '<%= pkg.description %>',
+          allowEmpty: true
+        },
+        files: {
+          src: [
+            '.'
+          ]
+        }
+      }
+    },
+    gitpush: {
+      task: {
+        options: {
+          branch: 'master',
+          remote: '<%= pkg.repository %>',
+          upstream: true
         },
         files: {
           src: [
@@ -151,6 +189,13 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-bump');
 
   // Register custom tasks
+  grunt.registerTask('serve', function () {
+    grunt.task.run([
+      'connect:livereload',
+      'watch'
+    ]);
+  });
+
   grunt.registerTask('build', [
     'clean',
     'test',
@@ -163,15 +208,21 @@ module.exports = function(grunt) {
     'karma:unit'
   ]);
 
-  grunt.registerTask('release', [
-    'build',
+  grunt.registerTask('git-release', [
     'gitadd',
-    'bump-commit',
-    'npm-publish',
+    'gitcommit',
+    'gitpush'
+  ]);
+
+  grunt.registerTask('release', [
+    'test',
+    'build',
+    'git-release',
     'bump-only'
   ]);
 
+
   // Default task(s).
-  grunt.registerTask('default', ['connect']);
+  grunt.registerTask('default', ['test', 'serve']);
 
 };

@@ -87,7 +87,6 @@
 
       particles = [];
       magnets = [];
-      clearInterval();
 
       canvas = element;
 
