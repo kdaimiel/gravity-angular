@@ -6,21 +6,22 @@
  * @author Enrique Daimiel Ruiz <k.daimiel@gmail.com>
  * @license MIT License, http://www.opensource.org/licenses/MIT
  */
+angular.module('Gravity.Constants', []);
+angular.module('Gravity.Factories', ['Gravity.Constants']);
+angular.module('Gravity.Services', ['Gravity.Factories']);
+angular.module('Gravity.Directives', ['Gravity.Services']);
+angular.module('Gravity.Controllers', ['Gravity.Services']);
 
-(function (){
-  'use strict';
+angular.module('gravity', [
+    'Gravity.Controllers',
+    'Gravity.Directives'
+  ]).run([
+    '$log',
+    function ($log) {
+      $log.debug('Gravity run');
+    }
+  ]);
 
-  angular.module('Gravity.Constants')
-    .constant('MAGNETS_AT_START', 4) // Number of magnets after initiation
-    .constant('MAGNETIC_FORCE_THRESHOLD', 300) // Attraction force threshold of magnet 
-    .constant('PARTICLES_PER_MAGNET', 20) // Number of particles per magnet
-
-    .constant('SCREEN', { // Screen size only used when a gravity id is not defined
-      HEIGHT: 400,
-      WIDTH: 400,
-    });
-
-})();
 
 (function () {
   angular.module('Gravity.Controllers')
@@ -75,22 +76,6 @@
     }
   }
 })();
-
-angular.module('Gravity.Constants', []);
-angular.module('Gravity.Factories', ['Gravity.Constants']);
-angular.module('Gravity.Services', ['Gravity.Factories']);
-angular.module('Gravity.Directives', ['Gravity.Services']);
-angular.module('Gravity.Controllers', ['Gravity.Services']);
-
-angular.module('gravity', [
-    'Gravity.Controllers',
-    'Gravity.Directives'
-  ]).run([
-    '$log',
-    function ($log) {
-      $log.debug('Gravity run');
-    }
-  ]);
 
 
 (function() {
@@ -380,17 +365,21 @@ angular.module('gravity', [
 
 })();
 
-function Magnet(){
-  this.orbit = 100;
-  this.position = { x: 0, y: 0 };
-  this.dragging = false;
-  this.connections = 0;
-  this.size = 1;
-}
 
-angular.module('Gravity.Factories')
-  .factory('Magnet', Magnet);
+(function (){
+  'use strict';
 
+  angular.module('Gravity.Constants')
+    .constant('MAGNETS_AT_START', 4) // Number of magnets after initiation
+    .constant('MAGNETIC_FORCE_THRESHOLD', 300) // Attraction force threshold of magnet 
+    .constant('PARTICLES_PER_MAGNET', 20) // Number of particles per magnet
+
+    .constant('SCREEN', { // Screen size only used when a gravity id is not defined
+      HEIGHT: 400,
+      WIDTH: 400,
+    });
+
+})();
 angular.module('Gravity.Factories')
   .factory('Particle', Particle);
 
@@ -405,3 +394,14 @@ function Particle(){
   this.orbit = 1;
   this.magnet = null;
 }
+
+function Magnet(){
+  this.orbit = 100;
+  this.position = { x: 0, y: 0 };
+  this.dragging = false;
+  this.connections = 0;
+  this.size = 1;
+}
+
+angular.module('Gravity.Factories')
+  .factory('Magnet', Magnet);

@@ -3,8 +3,13 @@ module.exports = function(grunt) {
 
   var myConfig = {
     src: [
-      'src/*.js',
-      'src/**/*.js',
+      'src/gravity.js',
+      'src/gravity.controller.js',
+      'src/gravity.directive.js',
+      'src/gravity.service.js',
+      'src/gravity.constants.js',
+      'src/particles/particle.factory.js',
+      'src/magnets/magnet.factory.js'
     ],
   };
 
@@ -46,7 +51,7 @@ module.exports = function(grunt) {
     connect: {
       options: {
         port: 8000,
-        livereload: 35729,
+        livereload: 35730,
         hostname: 'localhost'
       },
       livereload: {
